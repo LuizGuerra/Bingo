@@ -26,6 +26,30 @@ function generateCard(entries) {
     return cells;
 }
 
+function autoAdjustText(cell) {
+    const content = cell.textContent;
+    const length = content.length;
+    
+    // Reset to default size first
+    cell.classList.remove('small-text', 'tiny-text');
+    
+    // Check if text overflows horizontally
+    if (cell.scrollWidth > cell.clientWidth) {
+        if (length > 30) {
+            cell.classList.add('tiny-text');
+        } else if (length > 20) {
+            cell.classList.add('small-text');
+        }
+    }
+    
+    // Additional vertical check
+    if (cell.scrollHeight > cell.clientHeight) {
+        if (!cell.classList.contains('tiny-text')) {
+            cell.classList.add('small-text');
+        }
+    }
+}
+
 function renderCard(cells, markedStates) {
     const grid = document.getElementById('grid');
     grid.innerHTML = '';
@@ -44,6 +68,9 @@ function renderCard(cells, markedStates) {
         }
         
         grid.appendChild(cell);
+        
+        // Auto-adjust text size after rendering
+        setTimeout(() => autoAdjustText(cell), 10);
     });
 }
 
@@ -102,14 +129,16 @@ function saveCardState() {
     const marked = Array.from(document.querySelectorAll('.cell')).map(cell => cell.classList.contains('marked'));
     marked[12] = true; // Force center cell to be marked
     
+    const hasCelebrated = localStorage.getItem('bingoCelebrated') === 'true';
     localStorage.setItem('bingoCard', JSON.stringify({
         cells,
         marked
     }));
-
+    
     // Check for bingo after saving state
-    if(checkBingo()) {
+    if(checkBingo() && !hasCelebrated) {
         triggerBingoAnimation();
+        localStorage.setItem('bingoCelebrated', 'true');
     }
 }
 
@@ -131,6 +160,7 @@ function handleCreate() {
     const cells = generateCard(entries);
     
     localStorage.setItem('bingoEntries', JSON.stringify(entries));
+    localStorage.setItem('bingoCelebrated', 'false');
     localStorage.setItem('bingoCard', JSON.stringify({
         cells,
         marked: Array(25).fill(false).map((_, i) => i === 12)
@@ -148,6 +178,7 @@ function handleRandomize() {
     const savedEntries = JSON.parse(localStorage.getItem('bingoEntries'));
     const cells = generateCard(savedEntries);
     
+    localStorage.setItem('bingoCelebrated', 'false');
     localStorage.setItem('bingoCard', JSON.stringify({
         cells,
         marked: Array(25).fill(false).map((_, i) => i === 12)
@@ -169,4 +200,13 @@ function handleReset() {
 // Initial load
 window.addEventListener('load', () => {
     loadCardFromStorage();
+});
+
+// Add resize listener to handle window size changes
+window.addEventListener('resize', () => {
+    document.querySelectorAll('.cell').forEach(cell => {
+        if (cell.textContent !== 'Bingo') {
+            autoAdjustText(cell);
+        }
+    });
 });

@@ -61,6 +61,7 @@ body {
     justify-content: center;
     text-align: center;
     font-size: 2vw;
+    overflow-wrap: break-word;
     
     padding: 4px;
     cursor: pointer;
@@ -72,6 +73,16 @@ body {
     word-wrap: break-word;
 
     transition: all 0.2s ease;
+}
+
+.cell.small-text {
+    font-size: 1.5vw;
+    line-height: 1.2;
+}
+
+.cell.tiny-text {
+    font-size: 1.2vw;
+    line-height: 1.1;
 }
 
 .cell.marked {
@@ -135,4 +146,31 @@ button {
         font-size: 16px;
         padding: 8px;
     }
+
+    .cell.small-text {
+        font-size: 14px;
+        line-height: 1.2;
+    }
+    
+    .cell.tiny-text {
+        font-size: 12px;
+        line-height: 1.1;
+    }
+}
+
+@keyframes bingo-flash {
+    0% { background-color: #90EE90; }
+    50% { background-color: #4CAF50; }
+    100% { background-color: #90EE90; }
+}
+
+.bingo-animation {
+    animation: bingo-flash 0.5s 3;
+}
+
+.celebrate {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
 }
