@@ -7,6 +7,7 @@ body {
     align-items: center;
     font-family: Arial, sans-serif;
     background-color: #f0f0f0;
+    box-sizing: border-box;
 }
 
 #inputSection {
@@ -33,7 +34,7 @@ body {
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     /* margin: 20px 0; */
     /* width: 90vw; */
-    /* max-width: 500px; */
+    max-width: 500px;
     width: fit-content;
     max-width: 95vw;
     position: relative;
@@ -49,21 +50,6 @@ body {
     min-width: 280px;
     min-height: 280px;
 }
-
-/* .cell {
-    background: #fff;
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 5px;
-    font-size: 12px;
-    cursor: pointer;
-    user-select: none;
-    aspect-ratio: 1;
-} */
 
 .cell {
     background: #fff;
@@ -95,6 +81,9 @@ body {
 
 #buttons {
     margin-top: 20px;
+    bottom: 20px;
+    max-width: 500px;
+
     display: flex;
     gap: 10px;
     justify-content: center;
@@ -124,4 +113,26 @@ button {
 #randomizeBtn {
     background-color: #2196F3;
     color: white;
+}
+
+
+
+@media (min-width: 600px) {
+    body {
+        padding: 40px 20px;
+    }
+
+
+    #bingoCard {
+        max-width: 600px !important;
+        width: 600px !important;
+        margin: 30px;
+    }
+
+    .cell {
+        min-width: 80px;
+        min-height: 80px;
+        font-size: 16px;
+        padding: 8px;
+    }
 }
