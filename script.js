@@ -1,7 +1,7 @@
 function processEntries(entries) {
     return entries.map(entry => {
         let processed = entry.trim();
-        processed = processed.replace(/[^\w\s]/gi, '');
+        // processed = processed.replace(/[^\w\s]/gi, '');
         return processed;
     }).filter(entry => entry.length > 0);
 }
