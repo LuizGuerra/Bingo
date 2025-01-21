@@ -47,6 +47,56 @@ function renderCard(cells, markedStates) {
     });
 }
 
+function checkBingo() {
+    const cells = document.querySelectorAll('.cell');
+    const indices = Array.from(cells).map((cell, index) => 
+        cell.classList.contains('marked') ? index : -1
+    ).filter(index => index !== -1);
+
+    // Check rows
+    for(let i = 0; i < 5; i++) {
+        if([0,1,2,3,4].map(n => n + i*5).every(n => indices.includes(n))) return true;
+    }
+
+    // Check columns
+    for(let i = 0; i < 5; i++) {
+        if([0,5,10,15,20].map(n => n + i).every(n => indices.includes(n))) return true;
+    }
+
+    // Check diagonals
+    if([0,6,12,18,24].every(n => indices.includes(n))) return true;
+    if([4,8,12,16,20].every(n => indices.includes(n))) return true;
+
+    return false;
+}
+
+// Add this confetti animation function
+function triggerBingoAnimation() {
+    // Flash animation
+    document.querySelectorAll('.cell').forEach(cell => {
+        if(cell.classList.contains('marked')) cell.classList.add('bingo-animation');
+    });
+    
+    // Confetti effect
+    const count = 200;
+    const defaults = {
+        origin: { y: 0.7 }
+    };
+
+    function fire(particleRatio, opts) {
+        confetti(Object.assign({}, defaults, opts, {
+            particleCount: Math.floor(count * particleRatio)
+        }));
+    }
+
+    fire(0.25, { spread: 26, startVelocity: 55 });
+    fire(0.2, { spread: 60 });
+    fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
+    fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
+    fire(0.1, { spread: 120, startVelocity: 45 });
+}
+
+// Modify the saveCardState function to check for bingo
 function saveCardState() {
     const cells = Array.from(document.querySelectorAll('.cell')).map(cell => cell.textContent);
     const marked = Array.from(document.querySelectorAll('.cell')).map(cell => cell.classList.contains('marked'));
@@ -56,6 +106,11 @@ function saveCardState() {
         cells,
         marked
     }));
+
+    // Check for bingo after saving state
+    if(checkBingo()) {
+        triggerBingoAnimation();
+    }
 }
 
 function loadCardFromStorage() {

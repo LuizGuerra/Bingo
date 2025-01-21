@@ -27,24 +27,30 @@ body {
 
 #bingoCard {
     display: none;
-    width: 90vw;
-    max-width: 500px;
-    aspect-ratio: 1;
     background: white;
     padding: 10px;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    /* margin: 20px 0; */
+    /* width: 90vw; */
+    /* max-width: 500px; */
+    width: fit-content;
+    max-width: 95vw;
+    position: relative;
+    /* aspect-ratio: 1; */
 }
 
 .grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 5px;
-    height: 100%;
-    width: 100%;
+    gap: 4px;
+    /* height: 100%;
+    width: 100%; */
+    min-width: 280px;
+    min-height: 280px;
 }
 
-.cell {
+/* .cell {
     background: #fff;
     border: 2px solid #ccc;
     border-radius: 5px;
@@ -57,6 +63,29 @@ body {
     cursor: pointer;
     user-select: none;
     aspect-ratio: 1;
+} */
+
+.cell {
+    background: #fff;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 2vw;
+    
+    padding: 4px;
+    cursor: pointer;
+    user-select: none;
+    aspect-ratio: 1;
+
+    min-width: 50px;
+    min-height: 50px;
+    word-wrap: break-word;
+
+    transition: all 0.2s ease;
 }
 
 .cell.marked {
