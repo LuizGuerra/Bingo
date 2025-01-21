@@ -7,28 +7,18 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Bingo!</h1>
+    <div id="inputSection">
+        <textarea id="entriesInput" placeholder="Enter your bingo entries (one per line)"></textarea>
+        <button id="createBtn" onclick="handleCreate()">Create Bingo Card</button>
+    </div>
 
-        <div id="input-area">
-            <textarea id="bingo-entries" placeholder="Enter your 25 bingo entries, one per line"></textarea>
-            <button id="generate-button">Generate Bingo Card</button>
-        </div>
+    <div id="bingoCard">
+        <div class="grid" id="grid"></div>
+    </div>
 
-        <div id="bingo-card" class="hidden"></div>
-
-        <div class="controls">
-            <button id="reset-button">🔥 Reset Data</button>
-            <button id="randomize-button">Randomize Card</button>
-        </div>
-
-        <div id="randomize-confirm" class="modal hidden">
-            <div class="modal-content">
-                <p>Are you sure you want to burn the current card and generate a new one?</p>
-                <button id="confirm-randomize">Yes, randomize!</button>
-                <button id="cancel-randomize">Cancel</button>
-            </div>
-        </div>
+    <div id="buttons" style="display: none;">
+        <button id="randomizeBtn" onclick="handleRandomize()">🔄 Randomize Card</button>
+        <button id="resetBtn" onclick="handleReset()">🔥 Reset Data</button>
     </div>
 
     <script src="script.js"></script>
